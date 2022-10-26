@@ -1,30 +1,61 @@
 package TrelloClone.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@NoArgsConstructor @AllArgsConstructor
+@Data
 public class Task {
-    public @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long taskId;
+
+    @Autowired
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long taskId;
 
     //Can think of keeping state as Enum;
-    public String state;
-    public String assignedTo;
-    public String description;
-    public String comments;
+    private String state;
 
-    Task() {}
+    //What would be the type of assignedTo?? if User, how will we implement.
+    private String assignedTo;
+    private String description;
 
-    public Task(String state, String assignedTo, String description, String comments) {
+    private Timestamp created;
+    private Timestamp completed;
+
+    public Timestamp getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Timestamp completed) {
+        this.completed = completed;
+    }
+
+    public Task(String state, String assignedTo, String description, Timestamp created) {
         this.state = state;
         this.assignedTo = assignedTo;
         this.description = description;
-        this.comments = comments;
+        this.created = created;
+        this.completed = completed;
     }
 
-    public long getTaskId() {
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
+    public Long getTaskId() {
         return taskId;
     }
 
@@ -56,16 +87,7 @@ public class Task {
         this.description = description;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     //Equals method to be implemented.
-
 
     @Override
     public String toString() {

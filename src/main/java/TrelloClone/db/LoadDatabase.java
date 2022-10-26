@@ -12,7 +12,7 @@ class LoadDatabase {
 //    CommandLineRunner initDatabase(TaskRepository repository) {
 //
 //        return args -> {
-//            log.info("Preloading " + repository.save(new Task("Todo", "", "", "")));
+//            log.info("Preloading " + repository.save(new Task("Todo", "", "", "", new Timestamp(System.currentTimeMillis()))));
 //        };
 //    }
 }
