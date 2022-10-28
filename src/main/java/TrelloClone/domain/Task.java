@@ -21,10 +21,8 @@ public class Task {
     @Autowired
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long taskId;
 
-    //Can think of keeping state as Enum;
+    //Can keep state as Enum;
     private String state;
-
-    //What would be the type of assignedTo?? if User, how will we implement.
     private String assignedTo;
     private String description;
 
@@ -39,13 +37,14 @@ public class Task {
         this.completed = completed;
     }
 
-    public Task(String state, String assignedTo, String description, Timestamp created) {
-        this.state = state;
-        this.assignedTo = assignedTo;
-        this.description = description;
-        this.created = created;
-        this.completed = completed;
-    }
+    //I think this is not required.
+//    public Task(String state, String assignedTo, String description, Timestamp created) {
+//        this.state = state;
+//        this.assignedTo = assignedTo;
+//        this.description = description;
+//        this.created = created;
+//        this.completed = completed;
+//    }
 
     public Timestamp getCreated() {
         return created;
@@ -59,7 +58,7 @@ public class Task {
         return taskId;
     }
 
-    public void setTaskId(long taskId) {
+    public void setTaskId(Long taskId) {
         this.taskId = taskId;
     }
 
@@ -86,8 +85,6 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    //Equals method to be implemented.
 
     @Override
     public String toString() {

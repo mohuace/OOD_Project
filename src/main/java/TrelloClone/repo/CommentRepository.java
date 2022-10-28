@@ -11,7 +11,4 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     //Here, I have taskId as the id field so have to name it findByTaskTaskId.
     List<Comment> findByTaskTaskId(Long id);
     Comment findByCommentId(Long commentId);
-
-//    @Transactional
-//    void deleteByTaskId(long taskId);
 }

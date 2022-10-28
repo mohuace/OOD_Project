@@ -2,6 +2,7 @@ package TrelloClone.api;
 
 import TrelloClone.domain.Task;
 import TrelloClone.service.TaskService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,31 +28,37 @@ public class TaskController {
         return taskService.showBoard();
     }
 
+    @GetMapping("/tasks/{taskId}")
+    ResponseEntity<Task> getTaskById(@PathVariable Long taskId) {
+        Task modifiedTask = taskService.getTaskById(taskId);
+        if(modifiedTask == null) {
+            throw new RuntimeException("Not found Task with id = " +taskId);
+        }
+        return new ResponseEntity<>(modifiedTask, HttpStatus.OK);
+    }
+
     @PostMapping("/tasks/create")
-    Long newTask() {
-        return taskService.createTask();
+    //Create task --> either with empty
+    Long createTask(@RequestBody Task task) {
+        return taskService.createTask(task);
     }
-    @PostMapping("/tasks/modify")
+    @PutMapping("/tasks/modify")
+    //Any existing task will be modified.
     ResponseEntity<Task> modifyTask(@RequestBody Task task) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/run/tasks/modify").toUriString());
-        try {
-            return ResponseEntity.created(uri).body(taskService.modifyTask(task));
+        //For modify task, do we update the timestamp? ---> we can do that in the history table.
+        Task modifiedTask = taskService.modifyTask(task);
+        if(modifiedTask == null) {
+            throw new RuntimeException("Either the User or TaskID doesn't exist");
         }
-        catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
+        return new ResponseEntity<>(modifiedTask, HttpStatus.OK);
     }
-    // end::get-aggregate-root[]
-
-//    @PostMapping("/tasks")
-//    Task newEmployee(@RequestBody Task newTask) {
-//        return taskRepository.save(newTask);
-//    }
-//
     @DeleteMapping("/tasks/{taskId}")
-    ResponseEntity<Boolean> deleteTask(@PathVariable Long taskId) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/run/tasks").toUriString());
-
-        return ResponseEntity.created(uri).body(taskService.deleteTask(taskId));
+    //Delete task based on taskId
+    ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
+        boolean isDeleted = taskService.deleteTask(taskId);
+        if(!isDeleted) {
+            throw new RuntimeException("Task not found with id ="+taskId);
+        }
+        return new ResponseEntity<>("Task Deleted", HttpStatus.OK);
     }
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="Comments")
 public class Comment {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_generator")
+    @Id @GeneratedValue
     private Long commentId;
 
     public Long getCommentId() {
@@ -35,12 +35,11 @@ public class Comment {
     public void setTask(Task task) {
         this.task = task;
     }
-
-    @Lob
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "taskId", nullable = false)
+    //Cascade delete will delete all child rows if parent row is deleted.
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Task task;

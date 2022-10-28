@@ -5,8 +5,10 @@ import TrelloClone.domain.Task;
 import java.util.List;
 
 public interface TaskService {
-    Long createTask();
+    Long createTask(Task task);
     Task modifyTask(Task task);
-    Boolean deleteTask(long taskId);
+    Boolean deleteTask(Long taskId);
+
+    Task getTaskById(Long taskId);
     List<Task> showBoard();
 }
