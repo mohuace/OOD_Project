@@ -1,8 +1,8 @@
 package TrelloClone.service;
 
 import TrelloClone.repo.TaskRepository;
-import TrelloClone.domain.Task;
-import TrelloClone.domain.Users;
+import TrelloClone.model.Task;
+import TrelloClone.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

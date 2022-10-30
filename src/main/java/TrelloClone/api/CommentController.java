@@ -1,6 +1,6 @@
 package TrelloClone.api;
 
-import TrelloClone.domain.Comment;
+import TrelloClone.model.Comment;
 import TrelloClone.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

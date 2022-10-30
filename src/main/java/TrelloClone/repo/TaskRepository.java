@@ -1,8 +1,7 @@
 package TrelloClone.repo;
 
-import TrelloClone.domain.Task;
+import TrelloClone.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called taskRepository

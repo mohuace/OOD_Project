@@ -1,6 +1,6 @@
 package TrelloClone.service;
 
-import TrelloClone.domain.Comment;
+import TrelloClone.model.Comment;
 
 import java.util.List;
 

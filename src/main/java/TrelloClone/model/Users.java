@@ -1,4 +1,4 @@
-package TrelloClone.domain;
+package TrelloClone.model;
 
 public enum Users {
     JOHN,

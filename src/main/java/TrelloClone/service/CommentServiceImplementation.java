@@ -1,7 +1,7 @@
 package TrelloClone.service;
 
-import TrelloClone.domain.Comment;
-import TrelloClone.domain.Task;
+import TrelloClone.model.Comment;
+import TrelloClone.model.Task;
 import TrelloClone.repo.CommentRepository;
 import TrelloClone.repo.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;

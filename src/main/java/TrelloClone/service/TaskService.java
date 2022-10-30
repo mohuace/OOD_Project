@@ -1,6 +1,6 @@
 package TrelloClone.service;
 
-import TrelloClone.domain.Task;
+import TrelloClone.model.Task;
 
 import java.util.List;
 

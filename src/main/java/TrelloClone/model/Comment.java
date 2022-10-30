@@ -1,4 +1,4 @@
-package TrelloClone.domain;
+package TrelloClone.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;

@@ -1,4 +1,4 @@
-package TrelloClone.domain;
+package TrelloClone.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
