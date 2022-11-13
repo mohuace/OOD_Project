@@ -98,10 +98,7 @@ public class TaskServiceImplementation implements TaskService {
         int numOfRevisions = taskRepository.findRevisions(taskId).toList().size();
         //Find the second last revision from the history table.
         Task previousTaskState = taskRepository.findRevision(taskId,numOfRevisions - 1).get().getEntity();
-        //Fetch the existing task object from the memory and update that task object.
-        Task existingTask = taskRepository.findByTaskId(taskId);
-        existingTask.undoTask(previousTaskState);
-        taskRepository.save(existingTask);
-        return existingTask;
+        taskRepository.save(previousTaskState);
+        return previousTaskState;
     }
 }

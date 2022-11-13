@@ -78,15 +78,6 @@ public class Task {
         this.description = description;
     }
 
-    @NotAudited
-    public void undoTask(Task task) {
-        this.state = task.state;
-        this.description = task.description;
-        this.completed = task.completed;
-        this.assignedTo = task.assignedTo;
-        //Created and taskId not required to be assigned because it will be the same.
-    }
-
     @Override
     public String toString() {
         return "Task: "+this.taskId+"Description: "+this.description+" Assigned to: "+this.assignedTo;
