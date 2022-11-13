@@ -3,6 +3,8 @@ package TrelloClone.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
+@Audited
 @Data
 public class Task {
 
@@ -34,15 +37,6 @@ public class Task {
     public void setCompleted(Timestamp completed) {
         this.completed = completed;
     }
-
-    //I think this is not required.
-//    public Task(String state, String assignedTo, String description, Timestamp created) {
-//        this.state = state;
-//        this.assignedTo = assignedTo;
-//        this.description = description;
-//        this.created = created;
-//        this.completed = completed;
-//    }
 
     public Timestamp getCreated() {
         return created;
@@ -82,6 +76,15 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @NotAudited
+    public void undoTask(Task task) {
+        this.state = task.state;
+        this.description = task.description;
+        this.completed = task.completed;
+        this.assignedTo = task.assignedTo;
+        //Created and taskId not required to be assigned because it will be the same.
     }
 
     @Override

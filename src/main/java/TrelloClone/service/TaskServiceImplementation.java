@@ -4,10 +4,15 @@ import TrelloClone.repo.TaskRepository;
 import TrelloClone.model.Task;
 import TrelloClone.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImplementation implements TaskService {
@@ -72,5 +77,31 @@ public class TaskServiceImplementation implements TaskService {
 
     public Task getTaskById(Long taskId) {
         return taskRepository.findByTaskId(taskId);
+    }
+    public List<Task> getHistory(Long taskId) {
+        List<Task> historyList = new ArrayList<Task>();
+
+        taskRepository.findRevisions(taskId).get().forEach(x -> {
+            //x.getEntity().setEditVersion(x.getMetadata());
+            historyList.add(x.getEntity());
+        });
+
+        return historyList;
+    }
+
+    public Task undoTask(Long taskId) {
+        if(!taskRepository.existsByTaskId(taskId)) {
+            return null;
+        }
+
+        //Find the count of all the revisions.
+        int numOfRevisions = taskRepository.findRevisions(taskId).toList().size();
+        //Find the second last revision from the history table.
+        Task previousTaskState = taskRepository.findRevision(taskId,numOfRevisions - 1).get().getEntity();
+        //Fetch the existing task object from the memory and update that task object.
+        Task existingTask = taskRepository.findByTaskId(taskId);
+        existingTask.undoTask(previousTaskState);
+        taskRepository.save(existingTask);
+        return existingTask;
     }
 }
